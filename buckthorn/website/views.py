@@ -8,7 +8,7 @@ def home(request):
     variables = Context({
         'head_title' : 'PJCC Webpage',
         'page_title' : 'Welcome to the PJCC site.',
-        'page_body' : 'The current term is: ' + (Term.getCurrentTerm() and unicode(Term.getCurrentTerm()) or ''),
+        'page_body' : 'The current term is: ' + (Term.getCurrentTerm() and unicode(Term.getCurrentTerm()) or 'None'),
         })
     output = template.render(variables)
     return HttpResponse(output)

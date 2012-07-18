@@ -17,4 +17,8 @@ class Term(models.Model):
 
     @staticmethod
     def getCurrentTerm():
-        return Term.objects.get(startDate__lte=datetime.now(),endDate__gte=datetime.now())
+        try:
+            out = Term.objects.get(startDate__lte=datetime.now(),endDate__gte=datetime.now())
+            return out
+        except Term.DoesNotExist:
+            return None
