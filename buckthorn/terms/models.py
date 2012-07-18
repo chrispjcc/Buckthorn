@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.datetime_safe import datetime
 
 class Term(models.Model):
     startDate = models.DateField()
@@ -16,4 +17,4 @@ class Term(models.Model):
 
     @staticmethod
     def getCurrentTerm():
-        return None
+        return Term.objects.get(startDate__lte=datetime.now(),endDate__gte=datetime.now())

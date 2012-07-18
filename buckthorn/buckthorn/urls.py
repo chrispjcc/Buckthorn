@@ -3,8 +3,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'buckthorn.views.home', name='home'),
+    url(r'^$', 'pjccmain.views.home'),
     # url(r'^buckthorn/', include('buckthorn.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
