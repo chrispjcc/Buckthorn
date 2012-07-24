@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from dates.models import Michaelmas, Year, Hilary, Trinity
+from core.models import Michaelmas, Year, Hilary, Trinity
 
 class MichaelmasInline(admin.StackedInline):
     model = Michaelmas

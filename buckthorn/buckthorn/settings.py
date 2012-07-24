@@ -120,8 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'dates',
-    'website',
+    'core',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

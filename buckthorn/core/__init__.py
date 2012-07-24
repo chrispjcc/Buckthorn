@@ -1,5 +1,5 @@
 from django.utils.datetime_safe import datetime
-from dates.models import Term, Year
+from core.models import Term, Year
 
 def getCurrentTerm():
     try:
