@@ -1,9 +1,9 @@
-from django.utils.datetime_safe import datetime
+import datetime
 from core.models import Term, Year
 
 def getCurrentTerm():
     try:
-        out = Term.objects.get(startDate__lte=datetime.now(),endDate__gte=datetime.now())
+        out = Term.objects.get(startDate__lte=datetime.date.today(),endDate__gte=datetime.date.today())
         try:
             return out.michaelmas
         except models.Michaelmas.DoesNotExist:
@@ -26,6 +26,6 @@ def getCurrentTerm():
 
 def getCurrentYear():
     try:
-        return Year.objects.get(michaelmas__startDate__lte=datetime.now(),trinity__endDate__gte=datetime.now())
+        return Year.objects.get(michaelmas__startDate__lte=datetime.date.today(),trinity__endDate__gte=datetime.date.today())
     except Year.DoesNotExist:
         return None

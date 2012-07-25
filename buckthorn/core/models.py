@@ -1,9 +1,10 @@
 from django.db import models
-from django.utils.datetime_safe import datetime
+from django.contrib.auth.models import User
+import datetime
 
 def generate_years():
     def tuplify(x): return (x,str(x) + '-' + str(x+1))   # str(x) if needed
-    current_year = datetime.now().year
+    current_year = datetime.date.today().year
     return map(tuplify, range(2010, current_year + 1))  # range(1,4) gives [1,2,3]
 
 class Year(models.Model):
@@ -20,27 +21,70 @@ class Year(models.Model):
     def __unicode__(self):
         return u'%s-%s' % (self.year, self.year + 1)
 
-
 class Term(models.Model):
 
     startDate = models.DateField()
     endDate = models.DateField()
 
 class Michaelmas(Term):
-    year = models.OneToOneField(Year,related_name='michaelmas')
+    year = models.OneToOneField('Year',related_name='michaelmas')
 
     def __unicode__(self):
         return u'%s %s' % ('Michaelmas', self.year.start_year())
 
 class Hilary(Term):
-    year = models.OneToOneField(Year,related_name='hilary')
+    year = models.OneToOneField('Year',related_name='hilary')
 
     def __unicode__(self):
         return u'%s %s' % ('Hilary', self.year.end_year())
 
 class Trinity(Term):
-    year = models.OneToOneField(Year,related_name='trinity')
+    year = models.OneToOneField('Year',related_name='trinity')
 
     def __unicode__(self):
         return u'%s %s' % ('Trinity', self.year.end_year())
 
+class Course(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    number_of_years = models.IntegerField()
+
+    def __unicode__(self):
+        return self.name
+
+class Module(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    course = models.ForeignKey('Course')
+
+    def __unicode__(self):
+        return self.name
+
+class LectureSeries(models.Model):
+    name = models.CharField(max_length=200)
+    lecturer = models.ForeignKey('Lecturer')
+    module = models.ForeignKey('Module')
+
+    def __unicode__(self):
+        return self.name
+
+class Lecture(models.Model):
+    series = models.ForeignKey('LectureSeries')
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __unicode__(self):
+        return unicode(self.series) + u' - ' + unicode(self.date) + ' ' + unicode(self.start_time)
+
+class UserProfile(models.Model):
+    name = models.CharField(max_length=200)
+    user = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return self.name
+
+class Student(UserProfile):
+    course = models.ForeignKey('Course')
+    finish_year = models.IntegerField()
+
+class Lecturer(UserProfile):
+    pass

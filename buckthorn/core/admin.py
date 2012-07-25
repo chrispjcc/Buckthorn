@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import Michaelmas, Year, Hilary, Trinity
+from core.models import Michaelmas, Year, Hilary, Trinity, Student, Lecturer, LectureSeries, Course, Module
 
 class MichaelmasInline(admin.StackedInline):
     model = Michaelmas
@@ -20,3 +20,8 @@ class YearAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(Year,YearAdmin)
+admin.site.register(Student)
+admin.site.register(Lecturer)
+admin.site.register(LectureSeries)
+admin.site.register(Course)
+admin.site.register(Module)
